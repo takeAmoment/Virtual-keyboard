@@ -103,14 +103,14 @@ createTemplateKeys();
 
 document.addEventListener('click', function(event){
     let target = event.target;
-    if(event.target.className === 'key'){
+    console.log(event.target.className);
+    if(event.target.className === 'key' || event.target.className === 'key active'){
+       
         document.querySelectorAll('.key').forEach(el => {
             el.classList.remove('active');
             if (el.dataset.key === target.dataset.key){
                 el.classList.add('active');
-                if(el.innerHTML.length == 1){
-                    document.querySelector('.textarea').innerHTML += el.innerHTML;
-                }
+                createActionOfKey(el, event);
                 
             }
         })
@@ -120,14 +120,33 @@ document.addEventListener('click', function(event){
 
 /*--------keypress------*/
 let keysArr = document.querySelectorAll('.key');
+const textarea = document.querySelector('.textarea');
 
+
+
+
+function createActionOfKey(key, event){
+    if(key.innerHTML.length === 1){
+        textarea.innerHTML += key.innerHTML;
+    } else if(event.code === 'Space' || event.target.dataset.key === 'Space'){
+        textarea.innerHTML += ' ';
+    } else if(event.code === 'Backspace'|| event.target.dataset.key === 'Backspace'){
+        textarea.innerHTML = textarea.innerHTML.slice(0, -1);
+    } else if(event.code === 'ShiftLeft'|| event.target.dataset.key === 'ShiftLeft' || event.code === 'ShiftRight'|| event.target.dataset.key === 'ShiftRight'){
+    } else if(event.code === 'Delete'|| event.target.dataset.key === 'Delete'){
+        textarea.innerHTML = '';
+    }else if(event.code === 'Enter'|| event.target.dataset.key === 'Enter'){
+        textarea.innerHTML += '\n';
+    }
+}
 
 function addActiveToKey( event){
     keysArr.forEach(key => {
         key.classList.remove('active');
         if(key.dataset.key === event.code){
             key.classList.add('active');
-            document.querySelector('.textarea').innerHTML += key.innerHTML;
+            createActionOfKey(key, event);
+            
 
         }
     })

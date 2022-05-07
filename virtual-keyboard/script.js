@@ -70,11 +70,11 @@ let enKeys = {
     'b': 'KeyB',
     'n': 'KeyN',
     'm': 'KeyM',
+    ',': 'Comma',
     '.': 'Period',
-    ',': 'NumpadDecimal',
     '/': 'Slash',
     '▲': 'ArrowUp',
-    'Shift': 'ShiftRiht',
+    'Shift': 'ShiftRight',
     'Ctrl ': 'ControlLeft',
     'Win': 'MetaLeft',
     'Alt ': 'AltLeft',
@@ -115,4 +115,26 @@ document.addEventListener('click', function(event){
             }
         })
     }
+})
+
+
+/*--------keypress------*/
+let keysArr = document.querySelectorAll('.key');
+
+
+function addActiveToKey( event){
+    keysArr.forEach(key => {
+        key.classList.remove('active');
+        if(key.dataset.key === event.code){
+            key.classList.add('active');
+            document.querySelector('.textarea').innerHTML += key.innerHTML;
+
+        }
+    })
+}
+
+
+document.addEventListener('keydown', function(event){
+    console.log(event.code)
+    addActiveToKey(event);
 })

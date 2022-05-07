@@ -122,7 +122,23 @@ document.addEventListener('click', function(event){
 let keysArr = document.querySelectorAll('.key');
 const textarea = document.querySelector('.textarea');
 
+let isCapse = false;
+function makeLowerCase(){
+    for(let key of keysArr){
+        if(key.innerHTML === 1){
+            key.innerHTML = key.innerHTML.toLowerCase();
+        }
+    }
+}
 
+function makeUpperCase(){
+    for(let key of keysArr){
+        if(key.innerHTML.length === 1){
+            key.innerHTML = key.innerHTML.toUpperCase();
+        }
+    }
+}
+makeUpperCase();
 
 
 function createActionOfKey(key, event){

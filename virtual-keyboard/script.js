@@ -15,6 +15,9 @@ input.autofocus = true;
 document.body.appendChild(input);
 
 /*----------keyboard---------------*/
+const keyboard = document.createElement('div');
+keyboard.className = 'keyboard';
+document.body.appendChild(keyboard);
 
 let enKeys = {
     '`': 'Backquote',

@@ -97,3 +97,22 @@ function createTemplateKeys(){
 }
 
 createTemplateKeys();
+
+/*----click------ */
+
+
+document.addEventListener('click', function(event){
+    let target = event.target;
+    if(event.target.className === 'key'){
+        document.querySelectorAll('.key').forEach(el => {
+            el.classList.remove('active');
+            if (el.dataset.key === target.dataset.key){
+                el.classList.add('active');
+                if(el.innerHTML.length == 1){
+                    document.querySelector('.textarea').innerHTML += el.innerHTML;
+                }
+                
+            }
+        })
+    }
+})

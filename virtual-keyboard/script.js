@@ -83,4 +83,14 @@ let enKeys = {
     'Ctrl': 'ControlRight'
 };
 
+function createTemplateKeys(){
+    for(let el of Object.keys(enKeys)){
+        let key  = document.createElement('div');
+        key.className = 'key';
+        key.setAttribute('data-key', `${enKeys[el]}`);
+        key.textContent = el;
+        document.body.appendChild(key);
+    }
+}
 
+createTemplateKeys();

@@ -7,8 +7,9 @@ document.body.appendChild(title);
 
 /*--------create textarea--------*/
 
-const input = document.createElement('div');
+const input = document.createElement('textarea');
 input.className = 'textarea';
-input.rows = '20';
-input.cols = '50';
+input.autofocus = true;
+// input.rows = '20';
+// input.cols = '50';
 document.body.appendChild(input);

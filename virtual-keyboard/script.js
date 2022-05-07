@@ -92,7 +92,7 @@ function createTemplateKeys(){
         key.className = 'key';
         key.setAttribute('data-key', `${enKeys[el]}`);
         key.textContent = el;
-        document.body.appendChild(key);
+        keyboard.appendChild(key);
     }
 }
 

@@ -125,7 +125,7 @@ const textarea = document.querySelector('.textarea');
 let isCapse = false;
 function makeLowerCase(){
     for(let key of keysArr){
-        if(key.innerHTML === 1){
+        if(key.innerHTML.length === 1){
             key.innerHTML = key.innerHTML.toLowerCase();
         }
     }
@@ -138,8 +138,18 @@ function makeUpperCase(){
         }
     }
 }
-makeUpperCase();
 
+function doCapsLock(key){
+    isCapse = !isCapse;
+
+    if(isCapse){
+        key.style.backgroundColor = 'green';
+        makeUpperCase();
+    } else if(!isCapse){
+        key.style.backgroundColor = '';
+        makeLowerCase();
+    }
+}
 
 function createActionOfKey(key, event){
     if(key.innerHTML.length === 1){
@@ -153,6 +163,9 @@ function createActionOfKey(key, event){
         textarea.innerHTML = '';
     }else if(event.code === 'Enter'|| event.target.dataset.key === 'Enter'){
         textarea.innerHTML += '\n';
+    }else if(event.code === 'CapsLock'|| event.target.dataset.key === 'CapsLock'){
+        console.log('caps')
+        doCapsLock(key);
     }
 }
 
@@ -162,14 +175,20 @@ function addActiveToKey( event){
         if(key.dataset.key === event.code){
             key.classList.add('active');
             createActionOfKey(key, event);
-            
-
         }
     })
 }
-
+// function removeActiveToKey(){
+//     keysArr.forEach(key => {
+//         key.classList.remove('active');
+//     })
+// }
 
 document.addEventListener('keydown', function(event){
     console.log(event.code)
     addActiveToKey(event);
 })
+// document.addEventListener('keyup', function(event){
+//     console.log(event.code)
+//     removeActiveToKey(event);
+// })

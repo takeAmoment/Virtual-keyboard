@@ -100,27 +100,76 @@ createTemplateKeys();
 
 /*----click------ */
 
+let keysArr = document.querySelectorAll('.key');
+const textarea = document.querySelector('.textarea');
+
+function createActionOfKey(key, event){
+    if(key.innerHTML.length === 1){
+        textarea.innerHTML += key.innerHTML;
+    } else if(event.code === 'Space' || event.target.dataset.key === 'Space'){
+        textarea.innerHTML += ' ';
+    } else if(event.code === 'Backspace'|| event.target.dataset.key === 'Backspace'){
+        textarea.innerHTML = textarea.innerHTML.slice(0, -1);
+    } else if(event.code === 'ShiftLeft'|| event.target.dataset.key === 'ShiftLeft' || event.code === 'ShiftRight'|| event.target.dataset.key === 'ShiftRight'){
+        isShift();
+    } else if(event.code === 'Delete'|| event.target.dataset.key === 'Delete'){
+        textarea.innerHTML = '';
+    }else if(event.code === 'Enter'|| event.target.dataset.key === 'Enter'){
+        textarea.innerHTML += '\n';
+    }else if(event.code === 'CapsLock'|| event.target.dataset.key === 'CapsLock'){
+        doCapsLock(key);
+    }
+}
+
+function addActiveToKey(event){
+    keysArr.forEach(key => {
+        key.classList.remove('active');
+        if(key.dataset.key === event.code || key.dataset.key === event.target.dataset.key){
+            key.classList.add('active');
+            createActionOfKey(key, event);
+        }
+    })
+}
 
 document.addEventListener('click', function(event){
-    let target = event.target;
-    console.log(event.target.className);
     if(event.target.className === 'key' || event.target.className === 'key active'){
-       
-        document.querySelectorAll('.key').forEach(el => {
-            el.classList.remove('active');
-            if (el.dataset.key === target.dataset.key){
-                el.classList.add('active');
-                createActionOfKey(el, event);
-                
-            }
-        })
+       addActiveToKey(event);
     }
 })
 
 
 /*--------keypress------*/
-let keysArr = document.querySelectorAll('.key');
-const textarea = document.querySelector('.textarea');
+
+
+function pressTwoKeys(func, ...keys){
+    let arrOfKeys = new Set();
+
+    document.addEventListener('keydown', function(event){
+        arrOfKeys.add(event.code);
+
+
+        for(let code of keys){
+            if(!arrOfKeys.has(code)){
+                return;
+            }
+        }
+
+        arrOfKeys.clear();
+
+        func();
+    });
+
+
+    document.addEventListener('keyup', function(event){
+        arrOfKeys.delete(event.code);
+    })
+}
+
+pressTwoKeys(
+    ()=> console.log('hi'),
+    'ShiftLeft',
+    'AltLeft'
+);
 
 let isCapse = false;
 function makeLowerCase(){
@@ -150,34 +199,16 @@ function doCapsLock(key){
         makeLowerCase();
     }
 }
-
-function createActionOfKey(key, event){
-    if(key.innerHTML.length === 1){
-        textarea.innerHTML += key.innerHTML;
-    } else if(event.code === 'Space' || event.target.dataset.key === 'Space'){
-        textarea.innerHTML += ' ';
-    } else if(event.code === 'Backspace'|| event.target.dataset.key === 'Backspace'){
-        textarea.innerHTML = textarea.innerHTML.slice(0, -1);
-    } else if(event.code === 'ShiftLeft'|| event.target.dataset.key === 'ShiftLeft' || event.code === 'ShiftRight'|| event.target.dataset.key === 'ShiftRight'){
-    } else if(event.code === 'Delete'|| event.target.dataset.key === 'Delete'){
-        textarea.innerHTML = '';
-    }else if(event.code === 'Enter'|| event.target.dataset.key === 'Enter'){
-        textarea.innerHTML += '\n';
-    }else if(event.code === 'CapsLock'|| event.target.dataset.key === 'CapsLock'){
-        console.log('caps')
-        doCapsLock(key);
-    }
-}
-
-function addActiveToKey( event){
-    keysArr.forEach(key => {
-        key.classList.remove('active');
-        if(key.dataset.key === event.code){
-            key.classList.add('active');
-            createActionOfKey(key, event);
-        }
+function isShift(){
+    makeUpperCase();
+    document.addEventListener('keyup', function(event){
+        makeLowerCase();
     })
 }
+
+
+
+
 // function removeActiveToKey(){
 //     keysArr.forEach(key => {
 //         key.classList.remove('active');

@@ -162,7 +162,31 @@ const textarea = document.querySelector('.textarea');
 let enLang = true;
 let arr = [];
 
-
+function changeSimbol(){
+    console.log(enLang);
+    if(enLang){
+        arr = Object.keys(ruKeys);
+        keysArr.forEach(key => {
+            if(arr.includes(key.innerHTML)){
+                key.innerHTML = ruKeys[key.innerHTML];
+            }
+        })
+    }else if(!enLang){
+        arr = Object.values(ruKeys);
+        keysArr.forEach(key => {
+            if(arr.includes(key.innerHTML)){
+                for(let el of Object.keys(ruKeys)){
+                    console.log(el);
+                    if(ruKeys[el] == key.innerHTML){
+                        key.innerHTML = el;
+                    }
+                }
+                
+            }
+        })
+    }
+    enLang = !enLang;
+}
 
 function createActionOfKey(key, event){
     if(key.innerHTML.length === 1){

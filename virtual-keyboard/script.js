@@ -120,13 +120,24 @@ function createActionOfKey(key, event){
         doCapsLock(key);
     }
 }
-
+// function removeActive(){
+//     keysArr.forEach(key => {
+//         key.classList.remove('active');
+//         if(key.dataset.key === event.code || key.dataset.key === event.target.dataset.key){
+//             key.classList.add('active');
+//             createActionOfKey(key, event);
+//         }
+//     })
+// }
 function addActiveToKey(event){
     keysArr.forEach(key => {
         key.classList.remove('active');
         if(key.dataset.key === event.code || key.dataset.key === event.target.dataset.key){
             key.classList.add('active');
             createActionOfKey(key, event);
+            setTimeout(function(){
+                key.classList.remove ('active');
+            }, 500)
         }
     })
 }

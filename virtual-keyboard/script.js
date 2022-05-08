@@ -197,25 +197,26 @@ document.body.appendChild(signature);
 
 let keysArr = document.querySelectorAll('.key');
 const textarea = document.querySelector('.textarea');
-let enLang = true;
+let enLang= 'true';
 let isShift = false;
 let isCapse = false;
 let arr = [];
 
-function changeSymbol(obj){
-    if(enLang){
-        arr = Object.keys(obj);
-        keysArr.forEach(key => {
-            if(arr.includes(key.innerHTML)){
-                key.innerHTML = obj[key.innerHTML];
-            }
-        })
-    }else if(!enLang){
-        arr = Object.values(obj);
+
+function changeEnSymbol(obj){
+    console.log('change')
+    arr = Object.keys(obj);
+    keysArr.forEach(key => {
+        if(arr.includes(key.innerHTML)){
+            key.innerHTML = obj[key.innerHTML];
+        }
+    })
+}
+function changeRuSymbol(obj){
+    arr = Object.values(obj);
         keysArr.forEach(key => {
             if(arr.includes(key.innerHTML)){
                 for(let el of Object.keys(obj)){
-                    console.log(el);
                     if(obj[el] == key.innerHTML){
 
                         key.innerHTML = el;
@@ -224,9 +225,17 @@ function changeSymbol(obj){
                 
             }
         })
-    
+}
+function changeSymbol(obj){
+    if(enLang === 'true'){
+        changeEnSymbol(obj);
+        enLang = 'false'
+        
+    }else if(enLang === 'false'){
+        changeRuSymbol(obj);
+        enLang = 'true'
     }
-    enLang = !enLang;
+    console.log(enLang)
 }
 
 function createActionOfKey(key, event){
@@ -431,3 +440,24 @@ function doShift(){
 document.addEventListener('keydown', function(event){
     addActiveToKey(event);
 });
+
+
+/*----local storage */
+
+function setLocalStorage(){
+    console.log(enLang);
+    localStorage.setItem('enLang', enLang);
+}
+
+window.addEventListener('beforeunload', setLocalStorage);
+
+function getLocalStorage(){
+    if(localStorage.getItem('enLang')){
+        enLang = localStorage.getItem('enLang');
+        if(enLang === 'false'){
+        changeEnSymbol(ruKeys);
+        }
+    }
+}
+window.addEventListener('load', getLocalStorage);
+

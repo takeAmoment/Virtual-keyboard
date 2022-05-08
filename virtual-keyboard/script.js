@@ -88,6 +88,45 @@ let enKeys = {
     'Ctrl': 'ControlRight'
 };
 
+let ruKeys = {
+    '`': 'ё',
+    'q': 'й',
+    'w': 'ц',
+    'e': 'у',
+    'r': 'к',
+    't': 'е',
+    'y': 'н',
+    'u': 'г',
+    'i': 'ш',
+    'o': 'щ',
+    'p': 'з',
+    '[': 'х',
+    ']': 'ъ',
+    'a': 'ф',
+    's': 'ы',
+    'd': 'в',
+    'f': 'а',
+    'g': 'п',
+    'h': 'р',
+    'j': 'о',
+    'k': 'л',
+    'l': 'д',
+    ';': 'ж',
+    '\'': 'э',
+    'z': 'я',
+    'x': 'ч',
+    'c': 'с',
+    'v': 'м',
+    'b': 'и',
+    'n': 'т',
+    'm': 'ь',
+    ',': 'б',
+    '.': 'ю',
+    '/': '.',
+};
+
+
+
 function createTemplateKeys(){
     for(let el of Object.keys(enKeys)){
         let key  = document.createElement('div');
@@ -120,6 +159,10 @@ document.body.appendChild(signature);
 
 let keysArr = document.querySelectorAll('.key');
 const textarea = document.querySelector('.textarea');
+let enLang = true;
+let arr = [];
+
+
 
 function createActionOfKey(key, event){
     if(key.innerHTML.length === 1){
@@ -162,7 +205,8 @@ document.addEventListener('mousedown', function(event){
 /*--------keypress------*/
 
 
-function pressTwoKeys(func, ...keys){
+function pressTwoKeys(func,...keys){
+    console.log('hi');
     let arrOfKeys = new Set();
     document.addEventListener('keydown', function(event){
         arrOfKeys.add(event.code);
@@ -184,8 +228,8 @@ function pressTwoKeys(func, ...keys){
 }
 
 pressTwoKeys(
-    ()=> console.log('hi'),
-    'ShiftLeft',
+    ()=> changeSimbol(),
+    'ControlLeft',
     'AltLeft'
 );
 
@@ -248,6 +292,6 @@ function isShift(){
 }
 
 document.addEventListener('keydown', function(event){
-    console.log(event.code)
+    console.log(event)
     addActiveToKey(event);
 })

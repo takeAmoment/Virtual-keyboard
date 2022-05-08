@@ -131,7 +131,7 @@ function addActiveToKey(event){
     })
 }
 
-document.addEventListener('click', function(event){
+document.addEventListener('mousedown', function(event){
     if(event.target.className === 'key' || event.target.className === 'key active'){
        addActiveToKey(event);
     }
@@ -143,10 +143,8 @@ document.addEventListener('click', function(event){
 
 function pressTwoKeys(func, ...keys){
     let arrOfKeys = new Set();
-
     document.addEventListener('keydown', function(event){
         arrOfKeys.add(event.code);
-
 
         for(let code of keys){
             if(!arrOfKeys.has(code)){
@@ -155,7 +153,6 @@ function pressTwoKeys(func, ...keys){
         }
 
         arrOfKeys.clear();
-
         func();
     });
 
@@ -200,10 +197,36 @@ function doCapsLock(key){
     }
 }
 function isShift(){
-    makeUpperCase();
-    document.addEventListener('keyup', function(event){
+    if(!isCapse){
+        makeUpperCase();
+        document.addEventListener('keyup', function(event){
+            if(event.code === 'ShiftLeft'|| event.target.dataset.key === 'ShiftLeft' || event.code === 'ShiftRight'|| event.target.dataset.key === 'ShiftRight'){
+                makeLowerCase();
+            }
+           
+        })
+        document.addEventListener('mouseup', function(event){
+            if(event.code === 'ShiftLeft'|| event.target.dataset.key === 'ShiftLeft' || event.code === 'ShiftRight'|| event.target.dataset.key === 'ShiftRight'){
+                makeLowerCase();
+            }
+        })
+    } else if(isCapse){
         makeLowerCase();
-    })
+        document.addEventListener('keyup', function(event){
+            if(event.code === 'ShiftLeft'|| event.target.dataset.key === 'ShiftLeft' || event.code === 'ShiftRight'|| event.target.dataset.key === 'ShiftRight'){
+                makeUpperCase();
+            }
+        })
+        document.addEventListener('mouseup', function(event){
+            if(event.code === 'ShiftLeft'|| event.target.dataset.key === 'ShiftLeft' || event.code === 'ShiftRight'|| event.target.dataset.key === 'ShiftRight'){
+               console.log(event.code)
+                makeUpperCase();
+            }
+        })
+    }
+    
+    
+   
 }
 
 

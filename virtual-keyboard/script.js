@@ -198,7 +198,6 @@ document.body.appendChild(signature);
 let keysArr = document.querySelectorAll('.key');
 const textarea = document.querySelector('.textarea');
 let enLang= 'true';
-let isShift = false;
 let isCapse = false;
 let arr = [];
 

@@ -2,7 +2,7 @@
 
 const title = document.createElement('div');
 title.className = 'title';
-title.textContent = 'My virtual-keyboard';
+title.textContent = 'Virtual keyboard (RSS)';
 document.body.appendChild(title);
 
 /*--------create textarea--------*/
@@ -31,7 +31,7 @@ let enKeys = {
     '8': 'Digit8',
     '9': 'Digit9',
     '0': 'Digit0',
-    '-': 'NumpadSubtract',
+    '-': 'Minus',
     '=': 'Equal',
     'Backspace': 'Backspace',
     'Tab': 'Tab',
@@ -120,15 +120,7 @@ function createActionOfKey(key, event){
         doCapsLock(key);
     }
 }
-// function removeActive(){
-//     keysArr.forEach(key => {
-//         key.classList.remove('active');
-//         if(key.dataset.key === event.code || key.dataset.key === event.target.dataset.key){
-//             key.classList.add('active');
-//             createActionOfKey(key, event);
-//         }
-//     })
-// }
+
 function addActiveToKey(event){
     keysArr.forEach(key => {
         key.classList.remove('active');
@@ -235,25 +227,9 @@ function isShift(){
             }
         })
     }
-    
-    
-   
 }
-
-
-
-
-// function removeActiveToKey(){
-//     keysArr.forEach(key => {
-//         key.classList.remove('active');
-//     })
-// }
 
 document.addEventListener('keydown', function(event){
     console.log(event.code)
     addActiveToKey(event);
 })
-// document.addEventListener('keyup', function(event){
-//     console.log(event.code)
-//     removeActiveToKey(event);
-// })

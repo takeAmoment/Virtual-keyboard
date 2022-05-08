@@ -270,18 +270,23 @@ document.addEventListener('mousedown', function(event){
 /*--------keypress------*/
 
 
-function pressTwoKeys(func,...keys){
-    console.log('hi');
+function pressTwoKeys(func, ...arr){
+    
     let arrOfKeys = new Set();
     document.addEventListener('keydown', function(event){
         arrOfKeys.add(event.code);
 
-        for(let code of keys){
+        for(let code of arr){
             if(!arrOfKeys.has(code)){
                 return;
             }
         }
 
+        // for(let code of arr2){
+        //     if(!arrOfKeys.has(code)){
+        //         return;
+        //     }
+        // }
         arrOfKeys.clear();
         func(ruKeys);
     });
@@ -296,6 +301,12 @@ pressTwoKeys(
     ()=> changeSymbol(ruKeys),
     'ControlLeft',
     'AltLeft'
+
+);
+pressTwoKeys(
+    ()=> changeSymbol(ruKeys),
+    'ControlRight',
+    'AltRight'
 );
 
 

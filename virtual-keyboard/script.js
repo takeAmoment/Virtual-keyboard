@@ -120,9 +120,10 @@ let ruKeys = {
     'b': 'и',
     'n': 'т',
     'm': 'ь',
-    ',': 'б',
-    '.': 'ю',
     '/': '.',
+    ',': 'б',
+    '.': 'ю'
+    
 };
 
 let ruShift = {
@@ -148,7 +149,7 @@ let enShift = {
     '4': '$',
     '5': '%',
     '6': '^',
-    '7': '&',
+    '7': '&amp;',
     '8': '*',
     '9': '(',
     '0': ')',
@@ -159,13 +160,10 @@ let enShift = {
     '\\': '|',
     ';': ':',
     '\'': '"',
-    ',': '<',
-    '.': '>',
-    '.': '?',
+    ',': '&lt;',
+    '.': '&gt;',
+    '/': '?',
 }
-
-
-
 
 function createTemplateKeys(){
     for(let el of Object.keys(enKeys)){
@@ -188,7 +186,7 @@ signature.className = 'signature';
 description.className = 'text';
 description.textContent = 'The keyboard was created in the operating system Windows.';
 hint.className = 'text';
-hint.textContent = 'Use to change language Shift + Alt. '
+hint.textContent = 'Use to change language Ctrl + Alt. '
 
 signature.appendChild(description);
 signature.appendChild(hint);
@@ -200,30 +198,33 @@ document.body.appendChild(signature);
 let keysArr = document.querySelectorAll('.key');
 const textarea = document.querySelector('.textarea');
 let enLang = true;
+let isShift = false;
+let isCapse = false;
 let arr = [];
 
-function changeSimbol(){
-    console.log(enLang);
+function changeSymbol(obj){
     if(enLang){
-        arr = Object.keys(ruKeys);
+        arr = Object.keys(obj);
         keysArr.forEach(key => {
             if(arr.includes(key.innerHTML)){
-                key.innerHTML = ruKeys[key.innerHTML];
+                key.innerHTML = obj[key.innerHTML];
             }
         })
     }else if(!enLang){
-        arr = Object.values(ruKeys);
+        arr = Object.values(obj);
         keysArr.forEach(key => {
             if(arr.includes(key.innerHTML)){
-                for(let el of Object.keys(ruKeys)){
+                for(let el of Object.keys(obj)){
                     console.log(el);
-                    if(ruKeys[el] == key.innerHTML){
+                    if(obj[el] == key.innerHTML){
+
                         key.innerHTML = el;
                     }
                 }
                 
             }
         })
+    
     }
     enLang = !enLang;
 }
@@ -236,7 +237,7 @@ function createActionOfKey(key, event){
     } else if(event.code === 'Backspace'|| event.target.dataset.key === 'Backspace'){
         textarea.innerHTML = textarea.innerHTML.slice(0, -1);
     } else if(event.code === 'ShiftLeft'|| event.target.dataset.key === 'ShiftLeft' || event.code === 'ShiftRight'|| event.target.dataset.key === 'ShiftRight'){
-        isShift();
+        doShift();
     } else if(event.code === 'Delete'|| event.target.dataset.key === 'Delete'){
         textarea.innerHTML = '';
     }else if(event.code === 'Enter'|| event.target.dataset.key === 'Enter'){
@@ -282,7 +283,7 @@ function pressTwoKeys(func,...keys){
         }
 
         arrOfKeys.clear();
-        func();
+        func(ruKeys);
     });
 
 
@@ -292,12 +293,12 @@ function pressTwoKeys(func,...keys){
 }
 
 pressTwoKeys(
-    ()=> changeSimbol(),
+    ()=> changeSymbol(ruKeys),
     'ControlLeft',
     'AltLeft'
 );
 
-let isCapse = false;
+
 function makeLowerCase(){
     for(let key of keysArr){
         if(key.innerHTML.length === 1){
@@ -325,37 +326,97 @@ function doCapsLock(key){
         makeLowerCase();
     }
 }
-function isShift(){
+function changeKey(){
+
+        if(enLang){
+          arr = Object.keys(enShift);
+          keysArr.forEach(key => {
+            if(arr.includes(key.innerHTML)){
+              key.innerHTML = enShift[key.innerHTML];
+            }
+          })
+        } else if (!enLang){
+          arr = Object.keys(ruShift);
+          keysArr.forEach(key => {
+            if(arr.includes(key.innerHTML)){
+              key.innerHTML = ruShift[key.innerHTML];
+            }
+          })
+        }
+        
+}
+function removeChanges(){
+    if(enLang){
+        arr = Object.values(enShift);
+        console.log(keysArr);
+        keysArr.forEach(key => {
+            console.log(key.innerHTML);
+            if(arr.includes(key.innerHTML)){
+                
+                for(let el of Object.keys(enShift)){
+                    
+                    if(enShift[el] === key.innerHTML){
+                        console.log(enShift[el]);
+                        key.innerHTML = el;
+                    } 
+                }
+            }  
+            
+        })
+    } else if (!enLang){
+        arr = Object.values(ruShift);
+        keysArr.forEach(key => {
+            if(arr.includes(key.innerHTML)){
+                for(let el of Object.keys(ruShift)){
+                    if(ruShift[el] == key.innerHTML){
+                     key.innerHTML = el;
+                    }
+                }
+                
+            }
+        })
+    }
+}
+
+function doShift(){
     if(!isCapse){
+        changeKey();
         makeUpperCase();
+        
         document.addEventListener('keyup', function(event){
             if(event.code === 'ShiftLeft'|| event.target.dataset.key === 'ShiftLeft' || event.code === 'ShiftRight'|| event.target.dataset.key === 'ShiftRight'){
                 makeLowerCase();
+                removeChanges();
+                
             }
            
         })
         document.addEventListener('mouseup', function(event){
             if(event.code === 'ShiftLeft'|| event.target.dataset.key === 'ShiftLeft' || event.code === 'ShiftRight'|| event.target.dataset.key === 'ShiftRight'){
                 makeLowerCase();
+                removeChanges();
+                
             }
         })
     } else if(isCapse){
+        changeKey();
         makeLowerCase();
         document.addEventListener('keyup', function(event){
             if(event.code === 'ShiftLeft'|| event.target.dataset.key === 'ShiftLeft' || event.code === 'ShiftRight'|| event.target.dataset.key === 'ShiftRight'){
+                removeChanges();
                 makeUpperCase();
             }
         })
         document.addEventListener('mouseup', function(event){
             if(event.code === 'ShiftLeft'|| event.target.dataset.key === 'ShiftLeft' || event.code === 'ShiftRight'|| event.target.dataset.key === 'ShiftRight'){
-               console.log(event.code)
-                makeUpperCase();
+               
+               removeChanges();
+               makeUpperCase();
             }
         })
     }
 }
 
 document.addEventListener('keydown', function(event){
-    console.log(event)
     addActiveToKey(event);
-})
+});

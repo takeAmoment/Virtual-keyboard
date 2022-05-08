@@ -50,6 +50,7 @@ body{
     transition: 0.4s;
     background-color:seagreen;
     gap: 5px;
+    user-select: none;
 }
 @media screen and (max-width: 1279px) {
     .keyboard{
@@ -74,6 +75,7 @@ body{
     /* border: 1px solid rgba(0, 0, 0, 0.7); */
     color: white;
     box-shadow: 0px 0px 3px black;
+    user-select: none;
 }
 .key:hover{
     background-color:rgba(0, 0, 0, 0.5);

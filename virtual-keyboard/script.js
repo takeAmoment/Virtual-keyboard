@@ -19,6 +19,8 @@ const keyboard = document.createElement('div');
 keyboard.className = 'keyboard';
 document.body.appendChild(keyboard);
 
+
+
 let enKeys = {
     '`': 'Backquote',
     '1': 'Digit1',
@@ -97,6 +99,22 @@ function createTemplateKeys(){
 }
 
 createTemplateKeys();
+
+
+/*------create signature---- */
+const signature = document.createElement('div');
+const description = document.createElement('p');
+const hint = document.createElement('p');
+signature.className = 'signature';
+description.className = 'text';
+description.textContent = 'The keyboard was created in the operating system Windows.';
+hint.className = 'text';
+hint.textContent = 'Use to change language Shift + Alt. '
+
+signature.appendChild(description);
+signature.appendChild(hint);
+
+document.body.appendChild(signature);
 
 /*----click------ */
 

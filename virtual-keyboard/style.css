@@ -19,6 +19,7 @@ body{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: 18px;
 }
+
 .title{
     text-align: center;
     font-size: 32px;
@@ -49,6 +50,18 @@ body{
     transition: 0.4s;
     background-color:seagreen;
     gap: 5px;
+}
+@media screen and (max-width: 1279px) {
+    .keyboard{
+        grid-template-columns: repeat(17, minmax(42px, auto));
+        font-size: 16px;
+    }
+}
+@media screen and (max-width: 975px) {
+    .keyboard{
+        grid-template-columns: repeat(17, minmax(30px, auto));
+        font-size: 14px;
+    }
 }
 
 .key{

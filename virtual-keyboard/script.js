@@ -294,7 +294,6 @@ function pressTwoKeys(func, ...arr) {
         return;
       }
     }
-
     arrOfKeys.clear();
     func(ruKeys);
   });
@@ -420,6 +419,10 @@ function createActionOfKey(key, event) {
     textarea.innerHTML += '\n';
   } else if (event.code === 'CapsLock' || event.target.dataset.key === 'CapsLock') {
     doCapsLock(key);
+  } else if (event.code === 'AltLeft' || event.target.dataset.key === 'AltLeft' || event.code === 'AltRight' || event.target.dataset.key === 'AltRight') {
+    event.preventDefault();
+  } else if (event.code === 'MetaLeft' || event.target.dataset.key === 'MetaLeft') {
+    event.preventDefault();
   }
 }
 

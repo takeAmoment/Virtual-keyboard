@@ -109,6 +109,7 @@ const ruKeys = {
   j: 'о',
   k: 'л',
   l: 'д',
+  '.': 'ю',
   ';': 'ж',
   '\'': 'э',
   z: 'я',
@@ -118,10 +119,8 @@ const ruKeys = {
   b: 'и',
   n: 'т',
   m: 'ь',
-  '/': '.',
+  '/': '. ',
   ',': 'б',
-  '.': 'ю',
-
 };
 
 const ruShift = {
@@ -200,12 +199,50 @@ let enLang = 'true';
 let isCapse = false;
 let arr = [];
 
+function makeLowerCase() {
+  // eslint-disable-next-line no-restricted-syntax
+  for (const key of keysArr) {
+    if (key.innerHTML.length === 1) {
+      key.innerHTML = key.innerHTML.toLowerCase();
+    }
+  }
+}
+
+function makeUpperCase() {
+  // eslint-disable-next-line no-restricted-syntax
+  for (const key of keysArr) {
+    if (key.innerHTML.length === 1) {
+      key.innerHTML = key.innerHTML.toUpperCase();
+    }
+  }
+}
+
+function doCapsLock(key) {
+  isCapse = !isCapse;
+  if (isCapse) {
+    // eslint-disable-next-line no-param-reassign
+    key.style.backgroundColor = 'green';
+    makeUpperCase();
+  } else if (!isCapse) {
+    // eslint-disable-next-line no-param-reassign
+    key.style.backgroundColor = '';
+    makeLowerCase();
+  }
+}
 function changeEnSymbol(obj) {
   arr = Object.keys(obj);
   keysArr.forEach((key) => {
     if (arr.includes(key.innerHTML)) {
       // eslint-disable-next-line no-param-reassign
       key.innerHTML = obj[key.innerHTML];
+    }
+    if (isCapse) {
+      makeLowerCase();
+      if (arr.includes(key.innerHTML)) {
+        // eslint-disable-next-line no-param-reassign
+        key.innerHTML = obj[key.innerHTML];
+      }
+      makeUpperCase();
     }
   });
 }
@@ -220,6 +257,20 @@ function changeRuSymbol(obj) {
           key.innerHTML = el;
         }
       }
+    }
+
+    if (isCapse) {
+      makeLowerCase();
+      if (arr.includes(key.innerHTML)) {
+        // eslint-disable-next-line no-restricted-syntax
+        for (const el of Object.keys(obj)) {
+          if (obj[el] === key.innerHTML) {
+            // eslint-disable-next-line no-param-reassign
+            key.innerHTML = el;
+          }
+        }
+      }
+      makeUpperCase();
     }
   });
 }
@@ -264,37 +315,6 @@ pressTwoKeys(
   'ControlRight',
   'AltRight',
 );
-
-function makeLowerCase() {
-  // eslint-disable-next-line no-restricted-syntax
-  for (const key of keysArr) {
-    if (key.innerHTML.length === 1) {
-      key.innerHTML = key.innerHTML.toLowerCase();
-    }
-  }
-}
-
-function makeUpperCase() {
-  // eslint-disable-next-line no-restricted-syntax
-  for (const key of keysArr) {
-    if (key.innerHTML.length === 1) {
-      key.innerHTML = key.innerHTML.toUpperCase();
-    }
-  }
-}
-
-function doCapsLock(key) {
-  isCapse = !isCapse;
-  if (isCapse) {
-    // eslint-disable-next-line no-param-reassign
-    key.style.backgroundColor = 'green';
-    makeUpperCase();
-  } else if (!isCapse) {
-    // eslint-disable-next-line no-param-reassign
-    key.style.backgroundColor = '';
-    makeLowerCase();
-  }
-}
 function changeKey() {
   if (enLang) {
     arr = Object.keys(enShift);

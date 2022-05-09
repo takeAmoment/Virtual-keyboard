@@ -9,7 +9,8 @@ document.body.appendChild(title);
 
 const input = document.createElement('textarea');
 input.className = 'textarea';
-input.autofocus = true;
+// input.autofocus = true;
+// input.tabIndex = "-1";
 // input.rows = '20';
 // input.cols = '50';
 document.body.appendChild(input);
@@ -190,8 +191,6 @@ signature.appendChild(description);
 signature.appendChild(hint);
 
 document.body.appendChild(signature);
-
-/* ----click------ */
 
 const keysArr = document.querySelectorAll('.key');
 const textarea = document.querySelector('.textarea');
@@ -399,11 +398,18 @@ function doShift() {
   }
 }
 
+function createNewTab() {
+  textarea.innerHTML += '  ';
+}
+
 function createActionOfKey(key, event) {
   if (key.innerHTML.length === 1) {
     textarea.innerHTML += key.innerHTML;
   } else if (event.code === 'Space' || event.target.dataset.key === 'Space') {
     textarea.innerHTML += ' ';
+  } else if (event.code === 'Tab' || event.target.dataset.key === 'Tab') {
+    event.preventDefault();
+    createNewTab();
   } else if (event.code === 'Backspace' || event.target.dataset.key === 'Backspace') {
     textarea.innerHTML = textarea.innerHTML.slice(0, -1);
   } else if (event.code === 'ShiftLeft' || event.target.dataset.key === 'ShiftLeft' || event.code === 'ShiftRight' || event.target.dataset.key === 'ShiftRight') {

@@ -295,6 +295,17 @@ function pressTwoKeys(func, ...arr) {
       }
     }
     arrOfKeys.clear();
+    keysArr.forEach((key) => {
+      // eslint-disable-next-line no-restricted-syntax
+      for (const el of arr) {
+        if (el === key.dataset.key) {
+          // eslint-disable-next-line no-param-reassign
+          key.style.backgroundColor = 'yellowgreen';
+          // eslint-disable-next-line no-param-reassign
+          setTimeout(() => { key.style.backgroundColor = ''; }, 1000);
+        }
+      }
+    });
     func(ruKeys);
   });
 
